@@ -1,7 +1,10 @@
+// it is a toy code
+
 #include<cstdio>
 #include<cstdlib>
 #include<string>
 #include<queue>
+#include<map>
 const int maxn=100;
 
 int v[maxn][maxn];
@@ -36,7 +39,7 @@ void bfs(int a,int b){
     
     
 }
-
+map<pair<int,int>,pair<int,int> > path;
 int dis[maxn][maxn];
 int dfs(int sx,int sy,int dx,int dy){
     queue<pair<int,int> > Q;
@@ -70,10 +73,24 @@ int dfs(int sx,int sy,int dx,int dy){
                         printf("%d,%d\n",nx+i,ny+j);
                         dis[nx+i][ny+j]=dis[nx][ny]+1;
                         Q.push(pair<int,int>(nx+i,ny+j));
+                        //path.insert(pair<pair<int,int>,pair<int,int> >(pair<int,int>(nx+i,ny+j),pair<int,int>(nx,ny)));
+                        path.insert(make_pair(pair<int,int>(nx+i,ny+j),pair<int,int>(nx,ny)));
                     }
                 }
             }
         
+    }
+    printf("%d,%d\n",dx,dy);
+    int x=path[pair<int,int>(dx,dy)].first;
+    int y=path[pair<int,int>(dx,dy)].second;
+    while(1){
+        printf("-------8888----\n");
+        if(x==sx&&y==sy)
+            break;
+        printf("%d,%d\n",x,y);
+        int temp=x;
+        x=path[pair<int,int>(x,y)].first;
+        y=path[pair<int,int>(temp,y)].second;
     }
     return dis[dx][dy];
 }
